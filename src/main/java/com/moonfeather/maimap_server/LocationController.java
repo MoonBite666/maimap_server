@@ -19,5 +19,4 @@ public class LocationController {
     public List<Location> getLocations(@RequestParam String query) {
         return locationService.searchLocations(query);
     }
-
 }
