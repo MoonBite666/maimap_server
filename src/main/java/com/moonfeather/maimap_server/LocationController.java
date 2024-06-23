@@ -9,14 +9,20 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:5173") // replace with the origin of your frontend
 public class LocationController {
 
-    private final BaiduMapService baiduMapService;
+    private final TencentMapService tencentMapService;
 
-    public LocationController(BaiduMapService baiduMapService) {
-        this.baiduMapService = baiduMapService;
+    public LocationController(TencentMapService tencentMapService) {
+        this.tencentMapService = tencentMapService;
     }
 
     @GetMapping("/rgc")
     public String getLocations(@RequestParam double lat, @RequestParam double lng) throws Exception {
-        return baiduMapService.getRGCRequest(lat, lng);
+        return tencentMapService.getRGCRequest(
+                tencentMapService.coordinateTranslate(lat, lng)
+        );
+    }
+    @GetMapping("/translate")
+    public double[] translate(@RequestParam double lat, @RequestParam double lng) throws Exception {
+        return tencentMapService.coordinateTranslate(lat, lng);
     }
 }

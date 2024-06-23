@@ -11,42 +11,8 @@ import java.net.URL;
 import java.net.URLConnection;
 
 @Service
-public class BaiduMapService {
-    private final String AK = "XHKv0XndEu67LqcJrUHMsxZvsBlq8JAi";
-    private StringBuffer request;
-
-    public void requestGetAK(String strUrl, Map<String, String> param) throws Exception {
-        if (strUrl == null || strUrl.length() == 0 || param == null || param.size() == 0) {
-            return;
-        }
-        StringBuffer queryString = new StringBuffer();
-        queryString.append(strUrl);
-        for (Map.Entry<?, ?> pair : param.entrySet()) {
-            queryString.append(pair.getKey() + "=");
-            queryString.append(UriUtils.encode((String) pair.getValue(), "UTF-8") + "&");
-        }
-
-        if (queryString.length() > 0) {
-            queryString.deleteCharAt(queryString.length() - 1);
-        }
-
-        java.net.URL url = new URL(queryString.toString());
-        System.out.println(queryString.toString());
-        URLConnection httpConnection = (HttpURLConnection) url.openConnection();
-        httpConnection.connect();
-
-        InputStreamReader isr = new InputStreamReader(httpConnection.getInputStream());
-        BufferedReader reader = new BufferedReader(isr);
-        StringBuffer buffer = new StringBuffer();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            buffer.append(line);
-        }
-        reader.close();
-        isr.close();
-        System.out.println("AK: " + buffer.toString());
-        request = buffer;
-    }
+public class BaiduMapService extends MapService {
+    String AK = "XHKv0XndEu67LqcJrUHMsxZvsBlq8JAi";
 
     public String getRGCRequest(double lat, double lng) throws Exception {
         Map<String, String> param = Map.of(
