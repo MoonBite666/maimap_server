@@ -4,19 +4,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 public class LocationController {
 
-    private final LocationService locationService;
+    private final BaiduMapService baiduMapService;
 
-    public LocationController(LocationService locationService) {
-        this.locationService = locationService;
+    public LocationController(BaiduMapService baiduMapService) {
+        this.baiduMapService = baiduMapService;
     }
 
-    @GetMapping("/locations")
-    public List<Location> getLocations(@RequestParam String query) {
-        return locationService.searchLocations(query);
+    @GetMapping("/rgc")
+    public String getLocations(@RequestParam double lat, @RequestParam double lng) throws Exception {
+        return baiduMapService.getRGCRequest(lat, lng);
     }
 }
