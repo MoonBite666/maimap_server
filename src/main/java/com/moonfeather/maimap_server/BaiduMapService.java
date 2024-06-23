@@ -16,15 +16,13 @@ public class BaiduMapService {
     private StringBuffer request;
 
     public void requestGetAK(String strUrl, Map<String, String> param) throws Exception {
-        if (strUrl == null || strUrl.length() <= 0 || param == null || param.size() <= 0) {
+        if (strUrl == null || strUrl.length() == 0 || param == null || param.size() == 0) {
             return;
         }
         StringBuffer queryString = new StringBuffer();
         queryString.append(strUrl);
         for (Map.Entry<?, ?> pair : param.entrySet()) {
             queryString.append(pair.getKey() + "=");
-            //    第一种方式使用的 jdk 自带的转码方式  第二种方式使用的 spring 的转码方法 两种均可
-            //    queryString.append(URLEncoder.encode((String) pair.getValue(), "UTF-8").replace("+", "%20") + "&");
             queryString.append(UriUtils.encode((String) pair.getValue(), "UTF-8") + "&");
         }
 
