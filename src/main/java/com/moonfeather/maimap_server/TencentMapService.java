@@ -30,10 +30,20 @@ public class TencentMapService extends MapService{
 
         Map<String, String> param = Map.of(
                 "key", AK,
-                "location", coordinate[0] + "," + coordinate[1],
-                "output", "json"
+                "location", coordinate[0] + "," + coordinate[1]
         );
         requestGetAK("https://apis.map.qq.com/ws/geocoder/v1/?", param);
+        return request.toString();
+    }
+    public String getSuggestionsRequest(String keyword, String region, double[] location) throws Exception {
+        Map<String, String> param = Map.of(
+                "key", AK,
+                "keyword", keyword,
+                "region", region,
+                "region_fix", "1",
+                "location", location[0] + "," + location[1]
+        );
+        requestGetAK("https://apis.map.qq.com/ws/place/v1/suggestion?", param);
         return request.toString();
     }
 }
